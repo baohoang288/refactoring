@@ -22,13 +22,13 @@ public class StatementPrinter {
      * @throws RuntimeException if one of the play types is not known
      */
     public String statement() {
-        int totalAmount = getTotalAmount();
-        int volumeCredits = getTotalVolumeCredits();
-        StringBuilder result = new StringBuilder("Statement for " + invoice.getCustomer() + System.lineSeparator());
+        final int totalAmount = getTotalAmount();
+        final int volumeCredits = getTotalVolumeCredits();
+        final StringBuilder result = new StringBuilder("Statement for " + invoice.getCustomer() + System.lineSeparator());
 
         // Build the result string
         for (Performance p : invoice.getPerformances()) {
-            Play play = getPlay(p);
+            final Play play = getPlay(p);
             result.append(String.format("  %s: %s (%s seats)%n", play.getName(), usd(getAmount(p)), p.getAudience()));
         }
 
@@ -68,8 +68,8 @@ public class StatementPrinter {
         return result;
     }
 
-    private Play getPlay(Performance p) {
-        return plays.get(p.getPlayID());
+    private Play getPlay(Performance performance) {
+        return plays.get(performance.getPlayID());
     }
 
     private int getAmount(Performance performance) {
@@ -78,7 +78,8 @@ public class StatementPrinter {
             case "tragedy":
                 result = Constants.TRAGEDY_BASE_AMOUNT;
                 if (performance.getAudience() > Constants.TRAGEDY_AUDIENCE_THRESHOLD) {
-                    result += Constants.TRAGEDY_OVER_BASE_CAPACITY_PER_PERSON * (performance.getAudience() - Constants.TRAGEDY_AUDIENCE_THRESHOLD);
+                    result += Constants.TRAGEDY_OVER_BASE_CAPACITY_PER_PERSON
+                            * (performance.getAudience() - Constants.TRAGEDY_AUDIENCE_THRESHOLD);
                 }
                 break;
             case "comedy":
