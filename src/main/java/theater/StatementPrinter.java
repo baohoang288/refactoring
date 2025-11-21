@@ -24,7 +24,8 @@ public class StatementPrinter {
     public String statement() {
         final int totalAmount = getTotalAmount();
         final int volumeCredits = getTotalVolumeCredits();
-        final StringBuilder result = new StringBuilder("Statement for " + invoice.getCustomer() + System.lineSeparator());
+        final StringBuilder result = new StringBuilder();
+        result.append("Statement for ").append(invoice.getCustomer()).append(System.lineSeparator());
 
         // Build the result string
         for (Performance p : invoice.getPerformances()) {
